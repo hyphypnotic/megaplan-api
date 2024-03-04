@@ -1,10 +1,18 @@
 from flask import Flask, request
 import requests
 import logging
-from cmd import HEADERS, MEGAPLAN_URL
+from dotenv import load_dotenv
+import os
 
+load_dotenv('cmd/config.env')
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
+
+HEADERS = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {os.getenv('MP_ACCESS_TOKEN')}"
+}
+MEGAPLAN_URL = os.getenv('MEGAPLAN_URL')
 
 def create_client_data(data):
     return {
